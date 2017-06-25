@@ -1,3 +1,3 @@
-    Bootstrapper = require './bootstrapper'
+    Server = require './server'
 
-    new Bootstrapper().initialize().then (mod) -> mod.bootstrap()
+    new Server().initialize().then -> console.log 'done'

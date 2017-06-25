@@ -1,31 +1,34 @@
-    Module = require './module'
-    q      = require 'q'
+    Madul = require 'madul'
 
-    class Config extends Module
-      deps: [ 'readline', 'fs' ]
+    class Config extends Madul
+      deps: [ 'fs', 'arguments' ]
 
-      config: { }
+      $load_config: (done, fail) ->
+        @fs.stat @arguments.config, (err) =>
+          if err?
+            @warn 'file-not-found', @arguments.config
+            fail()
+          else
+            @_populate_config_from require @arguments.config
+            @_populate_config_from @arguments
 
-      initialize: =>
-        deferred = q.defer()
+            done @
 
-        super().then =>
-          reader = @readline.createInterface input: @fs.createReadStream './.env'
-
-          reader.on 'line', (line) =>
-            param = line.split ':'
-
-            if /,+/.test param[1]
-              @config[param[0]] = param[1].split ','
-            else if /^\d+$/.test param[1]
-              @config[param[0]] = parseInt param[1]
+      _populate_config_from: (obj) =>
+        for key, val of obj
+          if key.length > 2 && typeof val != 'undefined'
+            if typeof val == 'object' && val != null && val.length? == false
+              @dive_deeper key, val, @
             else
-              @config[param[0]] = param[1]
+              @[key] = val
 
-          reader.on 'error', (err) => @fail err
+      _dive_deeper: (prop, obj, context) =>
+        for key, val of obj
+          context[prop] = { } unless context[prop]?
 
-          reader.on 'close', => deferred.resolve @config
-
-        deferred.promise
+          if typeof val == 'object' && val != null && val.length? == false
+            @dive_deeper key, val, context[prop]
+          else
+            context[prop][key] = val
 
     module.exports = Config

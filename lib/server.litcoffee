@@ -1,41 +1,27 @@
-    Module = require './module'
+    Madul = require 'madul'
 
-    class Server extends Module
-      deps: [ 'express', 'body-parser', 'config' ]
-      pub:  [ 'configure', 'handle', 'start' ]
+    class Server extends Madul
 
-      app: undefined
+      deps: [ 'ws' ]
 
-      configure: =>
-        @app = @express()
-        @app.use @body_parser.json()
-        @app.use (req, res, next) ->
-          res.header 'Access-Control-Allow-Origin', '*'
-          res.header 'Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept'
-          next()
+      $boot: (done) ->
+        wss = new @ws.Server port: 1138
 
-        @done @
+        wss.on 'connection', (ws) =>
+          ws.on 'message', (mess) =>
+            console.log 'THIS', @
+            @handle JSON.parse mess
+              .then (output) => ws.send status: 'COMPLETE', data: output
+              .catch   (err) => ws.send status: 'ERROR',    data: err
+              .progress (up) => ws.send status: 'PROGRESS', data: up
 
-      handle: (verb, path, handler) =>
-        @app[verb] "/#{path}", (req, res) ->
-          input = { }
-
-          input[k] = v for k, v of req.body   if req.body?
-          input[k] = v for k, v of req.query  if req.query?
-          input[k] = v for k, v of req.params if req.params?
-
-          handler input
-            .then (output) -> res.json output
-            .fail (err)    ->
-              res
-                .status 417
-                .json err
-
-        @done @
-
-      start: =>
-        @app.listen @config.SERVER_PORT, =>
-          console.log "Listening on port #{@config.SERVER_PORT}"
-          @done @
+      handle:
+        validate: KEY: 'hasnt_expired'
+        before:   [ 'init_execution_context' ]
+        behavior: (input, done, fail, update) ->
+          input.EXECUTE input
+            .then     done
+            .catch    fail
+            .progress update
 
     module.exports = Server
