@@ -6,7 +6,7 @@
 
       sessions: { }
 
-      EXECUTE: ({ KEY, done, fail }) ->
+      EXECUTE: (KEY, done, fail) ->
         now = @microtime.now()
 
         @sessions[KEY] = now unless @sessions[KEY]?
@@ -15,6 +15,7 @@
           fail "session #{key} has expired"
         else
           @sessions[KEY] = now
+
           done()
 
     module.exports = HasntExpired

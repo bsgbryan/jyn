@@ -9,19 +9,24 @@
 
         wss.on 'connection', (ws) =>
           ws.on 'message', (mess) =>
-            console.log 'THIS', @
             @handle JSON.parse mess
-              .then (output) => ws.send status: 'COMPLETE', data: output
-              .catch   (err) => ws.send status: 'ERROR',    data: err
-              .progress (up) => ws.send status: 'PROGRESS', data: up
+              .then (output) => @_notify ws, 'COMPLETE', output
+              .catch   (err) => @_notify ws, 'ERROR',    err.message
+              .progress (up) => @_notify ws, 'PROGRESS', up
+
+      _notify: (socket, status, data) =>
+        socket.send JSON.stringify status: status, data: data
 
       handle:
         validate: KEY: 'hasnt_expired'
         before:   [ 'init_execution_context' ]
-        behavior: (input, done, fail, update) ->
-          input.EXECUTE input
-            .then     done
-            .catch    fail
-            .progress update
+        behavior: (input) ->
+          args = { }
+
+          for own key, val of input
+            if key != 'MODULE' && key != 'ACTION' && key != 'EXECUTE'
+              args[key] = val
+
+          input.EXECUTE args
 
     module.exports = Server

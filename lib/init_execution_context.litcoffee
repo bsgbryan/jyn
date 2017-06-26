@@ -2,21 +2,22 @@
 
     class InitExecutionContext extends Madul
 
-      _action_exists: (mod, action, done, fail) =>
-        if @[mod]?[action]?
+      _action_exists: (input, done, fail) =>
+        if @[input.MODULE]?[input.ACTION]?
+          input.EXECUTE = @[input.MODULE][input.ACTION]
+
           done()
         else
-          fail 'action-not-found', action
+          fail 'action-not-found', input.ACTION
 
-      before: ({MODULE, ACTION, done, fail}) ->
-        console.log 'arguments', arguments
-        console.log 'MODULE', MODULE
-
-        if @[MODULE]?
-          @_action_exists MODULE, ACTION, done, fail
+      before: (input, done, fail) ->
+        if @[input.MODULE]?
+          @_action_exists input, done, fail
         else
-          @_do_hydrate @, [ MODULE ], =>
-            if @[MODULE]?
-              @_action_exists MODULE, ACTION, done, fail
+          @_do_hydrate @, [ input.MODULE ], =>
+            if @[input.MODULE]?
+              @_action_exists input, done, fail
             else
-              fail 'module-not-found', MODULE
+              fail 'module-not-found', input.MODULE
+
+    module.exports = InitExecutionContext
