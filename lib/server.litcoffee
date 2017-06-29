@@ -2,10 +2,16 @@
 
     class Server extends Madul
 
-      deps: [ 'ws' ]
+      deps: [ 'ws', 'khaaanfig -> conf = load_config:args', 'jyn#arguments -> args' ]
+
+      load_config: (done) ->
+        @conf.load_file require.resolve './khaaanfig'
+        @conf.load_args @args
+
+        done()
 
       $boot: (done) ->
-        wss = new @ws.Server port: 1138
+        wss = new @ws.Server port: @conf.ws.port
 
         wss.on 'connection', (ws) =>
           ws.on 'message', (mess) =>
@@ -14,12 +20,14 @@
               .catch   (err) => @_notify ws, 'ERROR',    err.message
               .progress (up) => @_notify ws, 'PROGRESS', up
 
+        done()
+
       _notify: (socket, status, data) =>
-        socket.send JSON.stringify status: status, data: data
+        socket.send JSON.stringify { status, data }
 
       handle:
-        validate: KEY: 'hasnt_expired'
-        before:   [ 'init_execution_context' ]
+        validate: KEY: 'jyn#hasnt_expired'
+        before:   [ 'jyn#init_execution_context' ]
         behavior: (input) ->
           args = { }
 
@@ -28,5 +36,8 @@
               args[key] = val
 
           input.EXECUTE args
+            .then     (output) => input.done   output
+            .catch    (err)    => input.fail   err
+            .progress (delta)  => input.update delta
 
     module.exports = Server
