@@ -8,7 +8,7 @@
 
           done()
         else
-          fail 'action-not-found', input.ACTION
+          fail "Action #{input.ACTION} not available"
 
       before: (input, done, fail) ->
         if @[input.MODULE]?
@@ -18,6 +18,6 @@
             if @[input.MODULE]?
               @_action_exists input, done, fail
             else
-              fail 'module-not-found', input.MODULE
+              fail "Module #{input.MODULE} not available"
 
     module.exports = InitExecutionContext

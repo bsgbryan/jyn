@@ -6,15 +6,15 @@
 
       sessions: { }
 
-      EXECUTE: (KEY, done, fail) ->
+      EXECUTE: (name, value, done, fail) ->
         now = @microtime.now()
 
-        @sessions[KEY] = now unless @sessions[KEY]?
+        @sessions[value] = now unless @sessions[value]?
 
-        if now - @sessions[KEY] > 12000000
-          fail "session #{key} has expired"
+        if now - @sessions[value] > 12000000
+          fail "session #{value} has expired"
         else
-          @sessions[KEY] = now
+          @sessions[value] = now
 
           done()
 

@@ -1,1 +1,1 @@
-    module.exports = foo: 'bar'
+    module.exports = ws: port: 1138

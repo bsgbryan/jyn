@@ -1,6 +1,6 @@
 {
   "name": "jyn",
-  "version": "0.8.0",
+  "version": "1.0.0",
   "description": "A simple, fun, fully asynchronous api framework - built on madul",
   "homepage": "",
   "author": {
@@ -64,7 +64,7 @@
     "server:trace:ALL_YOUR_OBJECTS_ARE_BELONG_TO_US": "MADUL_LOG_LEVEL=8 gulp run-server"
   },
   "dependencies": {
-    "madul": "^1.1.4",
+    "madul": "^1.5.1",
     "microtime": "^2.1.5",
     "ws": "^3.0.0",
     "yargs": "^8.0.1"

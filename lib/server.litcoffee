@@ -2,32 +2,39 @@
 
     class Server extends Madul
 
-      deps: [ 'ws', 'khaaanfig -> conf = load_config:args', 'jyn#arguments -> args' ]
+      deps: [ 'ws' ]
 
-      load_config: (done) ->
-        @conf.load_file require.resolve './khaaanfig'
-        @conf.load_args @args
-
-        done()
-
-      $boot: (done) ->
-        wss = new @ws.Server port: @conf.ws.port
+      boot: (args, done) ->
+        wss = new @ws.Server port: args.ws.port
 
         wss.on 'connection', (ws) =>
           ws.on 'message', (mess) =>
-            @handle JSON.parse mess
+            try
+              input = JSON.parse mess
+            catch e
+              return @_notify ws, 'ERROR', "Could not parse as JSON: #{mess}"
+
+            @handle input
               .then (output) => @_notify ws, 'COMPLETE', output
-              .catch   (err) => @_notify ws, 'ERROR',    err.message
+              .catch   (err) => @_notify ws, 'ERROR',    err.message? || err
               .progress (up) => @_notify ws, 'PROGRESS', up
 
         done()
 
       _notify: (socket, status, data) =>
-        socket.send JSON.stringify { status, data }
+        if status == 'ERROR'
+          out = { status, message: data }
+        else
+          out = { status, data }
+
+        socket.send JSON.stringify out
 
       handle:
-        validate: KEY: 'jyn#hasnt_expired'
-        before:   [ 'jyn#init_execution_context' ]
+        validate:
+          KEY:    [ '.is_present', '.hasnt_expired' ]
+          MODULE: '.is_present'
+          ACTION: '.is_present'
+        before:   '.init_execution_context'
         behavior: (input) ->
           args = { }
 

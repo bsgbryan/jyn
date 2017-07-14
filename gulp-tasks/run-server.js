@@ -4,7 +4,7 @@ const conf = require('../gulp-conf/base');
 
 gulp.task('boot-server', function() {
   nodemon({
-    script: 'dist/index.js',
+    script: 'dist/cli.js',
     watch: ['lib/*'],
     tasks: ['brew-code:dist'],
     ext: '.coffee.md'
