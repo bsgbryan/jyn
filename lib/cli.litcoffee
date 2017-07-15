@@ -1,3 +1,6 @@
+    `#! /usr/bin/env node
+    `
+
     Server = require './server'
     args   = require './arguments'
 
