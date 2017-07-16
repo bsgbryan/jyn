@@ -20,7 +20,7 @@ gulp.task('run-server', gulp.series('dist', 'boot-server'));
 
 gulp.task('compile', gulp.series('clean', 'brew-code:dev'));
 
-gulp.task('prepublish', gulp.series('nsp'));
+gulp.task('prepublish', gulp.series('dist', 'nsp'));
 
 gulp.task('watch', function watch() {
   gulp.watch(conf.path.lib('**/*.coffee.md'), gulp.series('brew-code:dev', 'pre-test', 'run-tests'));
