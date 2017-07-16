@@ -64,7 +64,8 @@
     "server:trace:ALL_YOUR_OBJECTS_ARE_BELONG_TO_US": "MADUL_LOG_LEVEL=8 gulp run-server"
   },
   "dependencies": {
-    "madul": "^1.5.1",
+    "madul": "^1.6.0",
+    "magnus": "^2.0.0",
     "microtime": "^2.1.5",
     "ws": "^3.0.0",
     "yargs": "^8.0.1"
