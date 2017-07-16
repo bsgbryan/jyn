@@ -1,6 +1,9 @@
     `#! /usr/bin/env node
     `
 
+    if process.env.JYN_ENABLE_LOGGING
+      require 'magnus'
+
     Server = require './server'
     args   = require './arguments'
 
