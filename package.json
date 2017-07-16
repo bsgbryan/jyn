@@ -56,12 +56,9 @@
   "license": "MIT",
   "scripts": {
     "prepublish": "gulp prepublish",
-    "test": "MADUL_LOG_LEVEL=0 gulp",
-    "server:dist": "MADUL_LOG_LEVEL=3 gulp run-server",
-    "server:dev": "MADUL_LOG_LEVEL=4 gulp run-server",
-    "server:trace": "MADUL_LOG_LEVEL=5 gulp run-server",
-    "server:trace:deep": "MADUL_LOG_LEVEL=6 gulp run-server",
-    "server:trace:ALL_YOUR_OBJECTS_ARE_BELONG_TO_US": "MADUL_LOG_LEVEL=8 gulp run-server"
+    "test": "gulp",
+    "server:dist": "JYN_ENABLE_LOGGING=false gulp run-server",
+    "server:dev": "JYN_ENABLE_LOGGING=true gulp run-server"
   },
   "dependencies": {
     "madul": "^1.6.0",
