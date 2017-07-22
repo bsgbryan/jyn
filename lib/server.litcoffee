@@ -50,8 +50,7 @@
           args = { }
 
           for own key, val of input
-            if key != 'MODULE' && key != 'ACTION' && key != 'EXECUTE'
-              args[key] = val
+            args[key] = val unless EXCLUDE.includes key
 
           input.EXECUTE args
             .then     (output) => input.done   output
