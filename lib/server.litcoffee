@@ -46,15 +46,15 @@
           MODULE: '.is_present'
           ACTION: '.is_present'
         before:   '.init_execution_context'
-        behavior: (input) ->
+        behavior: (input, done, fail, update) ->
           args = { }
 
           for own key, val of input
             args[key] = val unless EXCLUDE.includes key
 
           input.EXECUTE args
-            .then     (output) => input.done   output
-            .catch    (err)    => input.fail   err
-            .progress (delta)  => input.update delta
+            .then     done
+            .catch    fail
+            .progress update
 
     module.exports = Server
