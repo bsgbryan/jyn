@@ -14,10 +14,13 @@
         if @[input.MODULE]?
           @_action_exists input, done, fail
         else
-          @_do_hydrate @, [ input.MODULE ], =>
-            if @[input.MODULE]?
-              @_action_exists input, done, fail
-            else
+          @_do_hydrate @, [ input.MODULE ], (errors) =>
+            if errors?
               fail "Module #{input.MODULE} not available"
+            else
+              if @[input.MODULE]?
+                @_action_exists input, done, fail
+              else
+                fail "Module #{input.MODULE} not available"
 
     module.exports = InitExecutionContext
