@@ -1,5 +1,16 @@
     Madul = require 'madul'
 
+    STATUSES =
+      COMPLETE: 'COMPLETE'
+      ERROR:    'ERROR'
+      PROGRESS: 'PROGRESS'
+
+    EXCLUDE = [
+      'MODULE'
+      'ACTION'
+      'EXECUTE'
+    ]
+
     class Server extends Madul
 
       deps: [ 'ws' ]
@@ -12,17 +23,17 @@
             try
               input = JSON.parse mess
             catch e
-              return @_notify ws, 'ERROR', "Could not parse as JSON: #{mess}"
+              return @_notify ws, STATUSES.ERROR, "Could not parse as JSON: #{mess}"
 
             @handle input
-              .then (output) => @_notify ws, 'COMPLETE', output
-              .catch   (err) => @_notify ws, 'ERROR',    err.message? || err
-              .progress (up) => @_notify ws, 'PROGRESS', up
+              .then (output) => @_notify ws, STATUSES.COMPLETE, output
+              .catch   (err) => @_notify ws, STATUSES.ERROR,    err.args? || err
+              .progress (up) => @_notify ws, STATUSES.PROGRESS, up
 
         done()
 
       _notify: (socket, status, data) =>
-        if status == 'ERROR'
+        if status == STATUSES.ERROR
           out = { status, message: data }
         else
           out = { status, data }
