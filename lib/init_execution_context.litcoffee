@@ -2,25 +2,22 @@
 
     class InitExecutionContext extends Madul
 
-      _action_exists: (input, done, fail) =>
-        if @[input.MODULE]?[input.ACTION]?
-          input.EXECUTE = @[input.MODULE][input.ACTION]
+      _action_exists: (input, ref, done, fail) =>
+        if @[ref]?[input.ACTION]?
+          input.EXECUTE = @[ref][input.ACTION]
 
           done()
         else
           fail "Action #{input.ACTION} not available"
 
       before: (input, done, fail) ->
-        if @[input.MODULE]?
-          @_action_exists input, done, fail
+        spec = Madul.PARSE_SPEC ".#{input.MODULE}"
+
+        if @[spec.ref]?
+          @_action_exists input, spec.ref, done, fail
         else
-          @_do_hydrate @, [ input.MODULE ], (errors) =>
-            if errors?
-              fail "Module #{input.MODULE} not available"
-            else
-              if @[input.MODULE]?
-                @_action_exists input, done, fail
-              else
-                fail "Module #{input.MODULE} not available"
+          Madul.DUMMY [ input.MODULE ], (dum) =>
+            @[spec.ref] = dum[spec.ref]
+            @_action_exists input, spec.ref, done, fail
 
     module.exports = InitExecutionContext
