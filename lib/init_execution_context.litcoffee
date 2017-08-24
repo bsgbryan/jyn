@@ -16,7 +16,7 @@
         if @[spec.ref]?
           @_action_exists input, spec.ref, done, fail
         else
-          Madul.DUMMY [ input.MODULE ], (dum) =>
+          Madul.DUMMY [ ".#{input.MODULE}" ], (dum) =>
             @[spec.ref] = dum[spec.ref]
             @_action_exists input, spec.ref, done, fail
 
