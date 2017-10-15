@@ -61,9 +61,12 @@
     "server:dev": "JYN_ENABLE_LOGGING=true gulp run-server"
   },
   "dependencies": {
+    "khaaanfig": "^1.0.0",
     "madul": "^1.6.0",
     "magnus": "^2.0.0",
     "microtime": "^2.1.5",
+    "pg-promise": "^7.0.1",
+    "sql-bricks-postgres": "^0.5.0",
     "ws": "^3.0.0",
     "yargs": "^8.0.1"
   }
