@@ -33,7 +33,7 @@
 
         wss.on 'connection', (ws, req) =>
           try
-            raw_ip = (req.connection.remoteAddress || req.headers['x-forwarded-for']).split ':'
+            raw_ip = (req.headers['x-forwarded-for'] || req.connection.remoteAddress).split ':'
             ip_v4  = raw_ip.pop()
             ip_v6  = raw_ip.join ':'
 
