@@ -91,7 +91,7 @@
               if err?
                 console.log 'Get error sending message', err
           else
-            consle.log 'SOCKET NOT OPEN'
+            console.log 'SOCKET NOT OPEN'
         catch e
           console.log 'Message send threw an error', e
 

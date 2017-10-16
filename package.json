@@ -1,6 +1,6 @@
 {
   "name": "jyn",
-  "version": "1.1.0",
+  "version": "1.2.3",
   "description": "A simple, fun, fully asynchronous api framework - built on madul",
   "homepage": "",
   "author": {
@@ -29,8 +29,8 @@
     "gulp-coffee": "^2.3.3",
     "gulp-coveralls": "^0.1.0",
     "gulp-eslint": "^3.0.1",
-    "gulp-exclude-gitignore": "^1.0.0",
-    "gulp-hub": "frankwallis/gulp-hub#d461b9c700df9010d0a8694e4af1fb96d9f38bf4",
+    "gulp-exclude-gitignore": "^1.2.0",
+    "gulp-hub": "github:frankwallis/gulp-hub#d461b9c700df9010d0a8694e4af1fb96d9f38bf4",
     "gulp-istanbul": "^1.0.0",
     "gulp-jasmine": "^2.4.2",
     "gulp-line-ending-corrector": "^1.0.1",
@@ -62,12 +62,12 @@
   },
   "dependencies": {
     "khaaanfig": "^1.0.0",
-    "madul": "^1.6.0",
+    "madul": "^1.7.0",
     "magnus": "^2.0.0",
     "microtime": "^2.1.5",
-    "pg-promise": "^7.0.1",
+    "pg-promise": "^7.0.2",
     "sql-bricks-postgres": "^0.5.0",
-    "ws": "^3.0.0",
+    "ws": "^3.2.0",
     "yargs": "^8.0.1"
   }
 }
