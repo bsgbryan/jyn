@@ -15,7 +15,7 @@
 
     class Server extends Madul
 
-      deps: [ '~ws', '.db' ]
+      deps: [ '~ws' ]
 
       boot: (args, done) ->
         wss = new @ws.Server port: args.ws.port
@@ -57,13 +57,6 @@
             for key, val of input
               if key != 'MODULE' and key != 'ACTION'
                 args[key] = val
-
-            @db.log_api_call
-              v4_address: ip_v4
-              v6_address: ip_v6
-              module:     input.MODULE || 'NONE'
-              action:     input.ACTION || 'NONE'
-              args:       args
 
             input._client_ip_address =
               v4: ip_v4
