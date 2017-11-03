@@ -18,7 +18,7 @@ That's it. Really.
 
 # Alternate install and usage option
 
-You can install and run Jyn locally. This works well in a hosted environment where `sudo` doesn't have access to your user's environment as running Jyn from your local `node_modules` does not require super user privileges.
+You can install and run Jyn locally. This works well in a hosted environment where `sudo` doesn't have access to your user's environment.
 
 ```sh
 npm install --save jyn
@@ -47,7 +47,7 @@ Every JSON request Jyn received must have two fields: `MODULE` and `ACTION`.
 
 ### Other args
 
-All other args are passed to `ACTION` as an arguments object.
+All other properties on the JSON message are passed to `ACTION` as an arguments object.
 
 # Example
 
@@ -56,9 +56,8 @@ The following shows everything you need to have Jyn setup, running, and serving 
 ### npm installs && vim
 
 ```sh
-npm install -g coffee-script@1.12.7
-npm install -g jyn wscat
-npm install --save madul
+npm install -g jyn wscat coffee-script@1.12.7
+npm install madul
 
 vim ./hello.coffee
 ```
@@ -88,19 +87,21 @@ coffee -o dist -c ./hello.coffee
 jyn # From the same directory as hello.coffee
 ```
 
-### wscat (make a request)
+### wscat
+
+Start the WebSocket client
 
 ```sh
 wscat -c ws://localhost:1138
 ```
 
-Then
+Then send a request
 
 ```sh
 {"MODULE":"hello", "ACTION":"say_hi","name":"Joe"}
 ```
 
-Which will produce
+Which will send back
 
 ```sh
 < {"status":"COMPLETE","data":"Hello, Joe!"}
