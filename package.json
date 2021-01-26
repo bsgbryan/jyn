@@ -1,6 +1,6 @@
 {
   "name": "@bsgbryan/jyn",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple, fully asynchronous, web socket Mädūl server",
   "homepage": "https://github.com/bsgbryan/jyn#readme",
   "author": "Bryan Maynard <bsgbryan@gmail.com> (https://bsgbryan.com)",
@@ -22,7 +22,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@bsgbryan/madul": "^1.1.0",
+    "@bsgbryan/madul": "^1.2.0",
     "ws": "^3.2.0",
     "yargs": "^16.2.0"
   }
