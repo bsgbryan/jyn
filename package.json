@@ -1,13 +1,16 @@
 {
   "name": "@bsgbryan/jyn",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A simple, fully asynchronous, web socket Mädūl server",
   "homepage": "https://github.com/bsgbryan/jyn#readme",
   "author": "Bryan Maynard <bsgbryan@gmail.com> (https://bsgbryan.com)",
   "bin": {
     "jyn": "lib/cli.js"
   },
-  "main": "lib/cli.js",
+  "scripts": {
+    "test": "mocha",
+    "watch": "mocha --watch"
+  },
   "keywords": [
     "api",
     "web socket",
@@ -22,8 +25,16 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@bsgbryan/madul": "^1.2.1",
+    "@bsgbryan/madul": "^1.3.0",
     "ws": "^3.2.0",
     "yargs": "^16.2.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1"
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "test"
   }
 }
