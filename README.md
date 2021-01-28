@@ -33,4 +33,4 @@ What does this look like in practice?
 1. `wscat -c ws://localhost:1138`
 1. `{"action": "casian.greet", "name": "World"}`
 
-This should result in the response `{result: "Hello World!"}`
+This should result in the response `{"result": "Hello World!"}`
