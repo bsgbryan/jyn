@@ -1,6 +1,6 @@
 {
   "name": "@bsgbryan/jyn",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A simple, fully asynchronous, web socket Mädūl server",
   "homepage": "https://github.com/bsgbryan/jyn#readme",
   "author": "Bryan Maynard <bsgbryan@gmail.com> (https://bsgbryan.com)",
@@ -11,6 +11,9 @@
     "test": "mocha",
     "watch": "mocha --watch"
   },
+  "files": [
+    "lib"
+  ],
   "keywords": [
     "api",
     "web socket",
