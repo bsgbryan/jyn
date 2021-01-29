@@ -60,16 +60,16 @@ describe('RogueZero', () => {
     describe('when cluster.isMaster is false', () => {
       it('calls server.boot()', async () => {
         let   bootCalled = false
-        const server     = { boot: () => bootCalled = true }
         const cluster    = { isMaster: false }
+        const server     = { boot:  () => bootCalled = true }
 
         await rz.$launch({ cluster, server })
 
         expect(bootCalled).to.be.true
       })
 
-      it('passes the port and interval args to server.boot()', async () => {
-        let portPassed, intervalPassed
+      it('passes the port param to server.boot()', async () => {
+        let portPassed
 
         const cluster = { isMaster: false }
         const server  = {
@@ -79,10 +79,9 @@ describe('RogueZero', () => {
           }
         }
 
-        await rz.$launch({ cluster, server, port: 0, interval: 0 })
+        await rz.$launch({ cluster, server, port: 0 })
 
         expect(portPassed).to.equal(0)
-        expect(intervalPassed).to.equal(0)
       })
     })
   })
