@@ -243,7 +243,7 @@ describe('server', () => {
         it('returns an error message if an Error is thrown during action execution', async () => {
           await messageHandler('{"action": "test.error"}')
 
-          expect(response).to.equal('{"error": "Example error message"}')
+          expect(response).to.equal('{"error": "Error: Example error message"}')
         })
 
         describe('response types', () => {
@@ -526,7 +526,7 @@ describe('server', () => {
           it("sends an error response with the error's message", async () => {
             await messageHandler('{"action": "nonexistant.fn"}')
 
-            expect(response).to.equal('{"error": "nonexistant does not exist"}')
+            expect(response).to.equal('{"error": "Error loading /nonexistant: nonexistant not found"}')
           })
         })
       })
