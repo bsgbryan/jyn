@@ -12,12 +12,7 @@ export const $launch = async ({
   instances,
 }: $launchArguments) => {
   if (cluster.isPrimary) {
-    for (let c = 0; c < instances; c++) {
-      console.log('Forking', c)
-      cluster.fork()
-    }
-
+    for (let c = 0; c < instances; c++) cluster.fork()
     console.log(instances, listening(instances), port)
   }
-  else console.log('Loading', cluster.worker!.id)
 }

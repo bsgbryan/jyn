@@ -1,3 +1,9 @@
+import madul from "@bsgbryan/madul"
+
+import params from "./params"
+
+const rz = await madul('+RogueZero', params, `${__dirname}/..`)
+
 const server = Bun.serve({
   fetch(req, server) {
     const url = new URL(req.url);
@@ -33,8 +39,3 @@ const server = Bun.serve({
     },
   },
 });
-
-console.log(`Listening on ${server.hostname}:${server.port}`);
-
-export const hostname = server.hostname
-export const port = server.port
