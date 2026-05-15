@@ -4,7 +4,7 @@ import params from "./params"
 
 const rz = await madul('+RogueZero', params, `${__dirname}/..`)
 
-const server = Bun.serve({
+Bun.serve({
   fetch(req, server) {
     const url = new URL(req.url);
     if (url.pathname === "/chat") {
