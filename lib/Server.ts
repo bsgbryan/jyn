@@ -9,8 +9,7 @@ const server = Bun.serve({
     const url = new URL(req.url);
     if (url.pathname === "/chat") {
       console.log(`upgrade!`);
-      const success = server.upgrade(req);
-      return success ?
+      return server.upgrade(req) ?
         new Response("Welcome! 🎉")
         :
         new Response("WebSocket upgrade error", { status: 400 });
