@@ -1,6 +1,4 @@
-import type { TimerHandler } from "bun"
 import cluster from "cluster"
-import { cpus } from "os"
 
 const listening = (w: number) => `worker${w > 1 ? 's' : ''} listening on port`
 

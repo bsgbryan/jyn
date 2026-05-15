@@ -21,7 +21,7 @@ const params = await yargs(hideBin(process.argv)).
     description: 'Port to run server on'
   }).
   option('prune', {
-    alias: 'p',
+    alias: 'd',
     type: 'number',
     default: env.prune,
     description: 'Dead connection pruning interval (in seconds)'
