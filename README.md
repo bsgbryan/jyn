@@ -1,5 +1,3 @@
-![NPM](https://img.shields.io/npm/l/@bsgbryan/jyn) ![GitHub top language](https://img.shields.io/github/languages/top/bsgbryan/jyn) ![Travis (.com) branch](https://img.shields.io/travis/com/bsgbryan/jyn/master) ![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/bsgbryan/jyn) ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/bsgbryan/jyn/master)
-
 # Jyn
 
 A simple, fun, fully asynchronous web socket server
