@@ -1,4 +1,7 @@
-import { isWorker } from "cluster"
+import {
+  isPrimary,
+  isWorker,
+} from "cluster"
 
 import { cpus } from "os"
 
@@ -35,17 +38,10 @@ const params = await yargs(hideBin(process.argv)).
   argv
 
 const main = async () => {
-  let rz
+  const rz = await madul('+RogueZero', params, `${__dirname}/..`)
 
-  try { rz = await madul('+RogueZero', params, `${__dirname}/..`) }
-  catch (e) { return console.warn((e as unknown as Error).message) }
-
-  if (isWorker) {
-    console.log('Worker created!')
-    // const id = rz.prune({ interval: params.interval })
-
-    // process.on('beforeExit', () => clearInterval(id))
-  }
+  if (isPrimary) await import("./Server")
+  else if (isWorker) console.log('Worker created!')
 }
 
 main()
