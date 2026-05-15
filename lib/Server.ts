@@ -1,4 +1,3 @@
-
 const server = Bun.serve({
   fetch(req, server) {
     const url = new URL(req.url);
