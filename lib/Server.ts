@@ -8,7 +8,7 @@ const server = Bun.serve({
       return success ? undefined : new Response("WebSocket upgrade error", { status: 400 });
     }
 
-    return new Response("Hello world");
+    return new Response("Rebelions are built on hope!");
   },
   websocket: {
     perMessageDeflate: true,
