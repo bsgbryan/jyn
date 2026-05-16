@@ -4,28 +4,24 @@ import params from "./params"
 
 const rz = await madul('+RogueZero', params, `${__dirname}/..`)
 
+type TestData = {
+  madul: string
+}
+
 Bun.serve({
-  hostname: 'localhost',
+  hostname: params.host,
   port: params.port,
   fetch(req, server) {
-    const url = new URL(req.url);
-    console.log(`upgrade ${url.pathname}!`);
-    return server.upgrade(req) ?
-      new Response(`Welcome to ${url.pathname}! 🎉`)
+    return server.upgrade(req, { data: { madul: new URL(req.url).pathname } }) ?
+      new Response("🎉")
       :
-      new Response("WebSocket upgrade error", { status: 400 });
+      new Response("WebSocket upgrade error", { status: 400 })
   },
   websocket: {
+    data: {} as TestData,
     perMessageDeflate: true,
-    open(ws) {
-      console.log('connection opened')
-    },
-    message(ws, message) {
-      console.log(`message received: ${message}`)
-      console.log('subscriptions', ws.subscriptions); // ["the-group-chat"]
-    },
-    close(ws) {
-      console.log('connection closed')
-    },
+    async open(ws) { await rz.load!({ madul: ws.data.madul }) },
+    async message(ws, message) { await rz.handle!({ madul: ws.data.madul, message }) },
+    close(ws) { console.log('connection closed') },
   },
 });

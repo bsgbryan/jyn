@@ -15,8 +15,8 @@
           console.log("CONNECTED")
           let counter = 0
           pingInterval = setInterval(() => {
-            console.log(`SENT: ping: ${counter++}`)
-            ws.send("ping")
+            console.log(`SENT: ping: ${counter}`)
+            ws.send(`ping: ${counter++}`)
           }, 1000)
         })
       })
