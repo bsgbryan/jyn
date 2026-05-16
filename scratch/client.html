@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+  <head>
+    <title>jyn test client</title>
+  </head>
+  <body>
+    <input type="url" name="url" id="url" value="ws://localhost:1138">
+    <button id="connect">connect</button>
+    <script>
+      document.getElementById("connect").addEventListener("click", () => {
+        const url = document.getElementById("url").value
+        const ws = new WebSocket(url)
+
+        ws.addEventListener("open", () => {
+          console.log("CONNECTED")
+          let counter = 0
+          pingInterval = setInterval(() => {
+            console.log(`SENT: ping: ${counter++}`)
+            ws.send("ping")
+          }, 1000)
+        })
+      })
+    </script>
+  </body>
+</html>
