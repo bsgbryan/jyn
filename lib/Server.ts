@@ -26,7 +26,7 @@ const main = async () => {
       async message(ws, message) { await rz.handle!({ madul: ws.data.madul, message }) },
       close(ws) { console.log('connection closed') },
     },
-  });
+  })
 }
 
 main()
