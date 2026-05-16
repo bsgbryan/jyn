@@ -4,21 +4,74 @@
     <title>jyn test client</title>
   </head>
   <body>
-    <input type="url" name="url" id="url" value="ws://localhost:1138">
+    <input type="url" name="url" id="url" placeholder="ws://localhost:1138">
     <button id="connect">connect</button>
     <script>
-      document.getElementById("connect").addEventListener("click", () => {
+      let counter = Number(localStorage.getItem('counter') ?? 0)
+      let ws
+      let ping
+      let active = Boolean(localStorage.getItem('active'))
+      
+      document.getElementById("url").value = localStorage.getItem('url')
+
+      const fn = () => {
+        if (active) {
+          console.log(`SENT: ping: ${counter}`)
+          ws.send(`ping: ${counter++}`)
+        }
+      }
+
+      const init = () => {
+        if (ws) {
+          console.log('closing existing connection')
+          ws.close()
+          ws = null
+          if (ping) {
+            window.clearInterval(ping)
+            ping = undefined
+          }
+        }
+
         const url = document.getElementById("url").value
-        const ws = new WebSocket(url)
+
+        console.log(counter, active, url)
+
+        ws = new WebSocket(url)
 
         ws.addEventListener("open", () => {
           console.log("CONNECTED")
-          let counter = 0
-          pingInterval = setInterval(() => {
-            console.log(`SENT: ping: ${counter}`)
-            ws.send(`ping: ${counter++}`)
-          }, 1000)
+          active = true
+          if (!ping) ping = setInterval(fn, 1000)
         })
+
+        ws.addEventListener("close", () => {
+          console.log("DISCONNECTED")
+          clearInterval(ping)
+          ping = undefined
+        })
+      }
+
+      console.log({active})
+
+      if (active) init()
+
+      document.getElementById("connect").addEventListener("click", init)
+
+      window.addEventListener("pagehide", () => {
+        console.log('hiding', active)
+        if (ws) {
+          console.log("CLOSING")
+
+          localStorage.setItem('active', active ? "true": "")
+          localStorage.setItem('counter', counter)
+          localStorage.setItem('url', document.getElementById("url").value)
+
+          window.clearInterval(ping)
+          ws.close()
+          ws = null
+          ping = undefined
+          active = false
+        }
       })
     </script>
   </body>

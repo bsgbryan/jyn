@@ -6,7 +6,11 @@
     "moduleDetection": "force",
     "jsx": "react-jsx",
     "allowJs": true,
-    "types": ["bun"],
+    "types": [
+      "bun",
+      "@bsgbryan/madul",
+      "@types/yargs"
+    ],
 
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,

@@ -5,7 +5,7 @@
   "homepage": "https://github.com/bsgbryan/jyn#readme",
   "author": "Bryan Maynard <bsgbryan@gmail.com> (https://bsgbryan.com)",
   "bin": {
-    "jyn": "lib/cli.js"
+    "jyn": "index.js"
   },
   "files": [
     "lib"
