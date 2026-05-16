@@ -1,6 +1,6 @@
+let active  = Boolean(localStorage.getItem('active'))
 let counter = Number(localStorage.getItem('counter') ?? 0)
 let ping
-let active = Boolean(localStorage.getItem('active'))
 
 const fn = (ws) => () => {
   if (active) {
