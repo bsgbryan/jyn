@@ -26,51 +26,53 @@
           console.log('closing existing connection')
           ws.close()
           ws = undefined
+
           if (ping) {
+            console.log('clearing existing ping interval')
             window.clearInterval(ping)
             ping = undefined
           }
         }
 
         const url = document.getElementById("url").value
-
-        console.log(counter, active, url)
-
         ws = new WebSocket(url)
 
         ws.addEventListener("open", () => {
-          console.log("CONNECTED")
+          console.log("connected to", url)
           active = true
-          if (!ping) ping = setInterval(fn, 1000)
+
+          if (!ping) {
+            console.log('initializing ping interval')
+            ping = setInterval(fn, 1000)
+          }
         })
 
         ws.addEventListener("close", () => {
-          console.log("DISCONNECTED")
+          console.log("server closed connection, clearing ping interval")
           clearInterval(ping)
           ping = undefined
           ws = undefined
         })
       }
 
-      console.log({active})
-
       if (active) init()
 
       document.getElementById("connect").addEventListener("click", init)
 
       window.addEventListener("pagehide", () => {
-        console.log('hiding', active)
+        console.log('saving state on pagehide')
+        localStorage.setItem('active', active ? "true": "")
+        localStorage.setItem('counter', counter)
+        localStorage.setItem('url', document.getElementById("url").value)
+
+        console.log('clearing ping interval')
+        window.clearInterval(ping)
+        ping = undefined
+
         if (ws) {
-          console.log("CLOSING")
-
-          localStorage.setItem('active', active ? "true": "")
-          localStorage.setItem('counter', counter)
-          localStorage.setItem('url', document.getElementById("url").value)
-
-          window.clearInterval(ping)
+          console.log("closing connection")
           ws.close()
           ws = undefined
-          ping = undefined
           active = false
         }
       })
