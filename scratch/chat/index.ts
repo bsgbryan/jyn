@@ -1,3 +1,11 @@
-type Param = { message: string }
+type Params = {
+  message: string
+  server: Bun.ServerWebSocket
+}
 
-export default ({ message }: Param) => { console.log(`I hear you: ${message}`) }
+export default ({
+  message,
+  server,
+}: Params) => {
+  server.sendText(`I hear you: ${message}`)
+}

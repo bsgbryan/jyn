@@ -1,0 +1,133 @@
+html[color-scheme=dark] {
+  --backdrop-color: #112;
+  --heading-text-color: #aa9;
+  --messages-backdrop-color: rgba(0, 0, 0, 0.125);
+}
+
+html[color-scheme=light] {
+  --backdrop-color: #eee;
+  --heading-text-color: #330;
+  --messages-backdrop-color: #ddc;
+}
+
+html {
+  background-color: var(--backdrop-color);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: hidden;
+}
+
+section {
+  width: 40rem;
+}
+
+h2,
+.server .actions button,
+.messages li p {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+h2 {
+  color: var(--heading-text-color);
+  font-size: 2rem;
+}
+
+.server input,
+.server .actions {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.server input {
+  background-color: rgba(64, 64, 64, 0.125);
+  border: 1px solid rgba(120, 120, 127.5, 0.9);
+  border-radius: 0.5rem;
+  color: rgba(240, 240, 255, 0.9);
+  display: block;
+  font-size: 1.25rem;
+  min-width: 20rem;
+  padding: 0.25rem 0.75rem 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.server .actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  min-width: 25rem;
+}
+
+.server .actions button {
+  border: 1px solid #848;
+  border-radius: 0.25rem;
+  color: #fbf;
+  background-color: #404;
+  font-size: 1rem;
+  padding-bottom: 0.25rem;
+  width: 7rem;
+}
+
+.messages,
+.messages ul {
+  display: flex;
+  flex-direction: column;
+}
+
+.messages {
+  bottom: 0;
+  position: absolute;
+  top: 12rem;
+}
+
+.messages ul {
+  background-color: var(--messages-backdrop-color);
+  border-radius: 0.5rem;
+  bottom: 1rem;
+  box-shadow: 0 3px 5px black;
+  height: calc(100% - 7rem);
+  left: 0;
+  overflow-y: scroll;
+  position: absolute;
+  right: 0;
+  margin: 0;
+  padding: 0.5rem 1rem;
+}
+
+html[color-scheme=dark] .messages li {
+  --server-message-backdrop-color: #535;
+  --client-message-backdrop-color: #335;
+}
+
+html[color-scheme=light] .messages li {
+  --server-message-backdrop-color: #535;
+  --client-message-backdrop-color: #353;
+}
+
+.messages li {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding-block-start: 0;
+}
+
+.messages li p {
+  border-radius: 1rem;
+  box-shadow: 0 2px 3px black;
+  color: rgba(255, 255, 255, 0.8);
+  display: block;
+  font-size: 1.25rem;
+  margin: 0.5rem 0;
+  padding: 0.5rem 1rem;
+  width: fit-content;
+}
+
+.messages .client { align-items: flex-start }
+.messages .client p { background-color: var(--client-message-backdrop-color) }
+
+.messages .server { align-items: flex-end }
+.messages .server p { background-color: var(--server-message-backdrop-color) }

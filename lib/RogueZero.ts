@@ -34,9 +34,14 @@ export const load = async ({ madul }: LoadParam) => {
 
 type HandleParams = LoadParam & {
   message: string
+  server: Bun.ServerWebSocket
 }
 
-export const handle = ({ madul, message }: HandleParams) => {
-  if (handlers.has(madul)) handlers.get(madul)!.default!({ message })
+export const handle = ({
+  madul,
+  message,
+  server,
+}: HandleParams) => {
+  if (handlers.has(madul)) handlers.get(madul)!.default!({ message, server })
   else console.error("No handler for", madul)
 }

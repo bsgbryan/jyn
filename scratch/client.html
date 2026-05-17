@@ -2,16 +2,27 @@
 <html>
   <head>
     <title>jyn test client</title>
+    <link rel="stylesheet" href="./client.css">
   </head>
   <body>
-    <section>
+    <section class="server">
       <header>
         <h2>Server</h2>
       </header>
       <form>
         <input type="url" name="url" id="url" placeholder="ws://localhost:1138">
-        <button id="connect">connect</button>
+        <div class="actions">
+          <button id="connect">connect</button>
+          <button id="disconnect">disconnect</button>
+          <button id="reset-counter">reset counter</button>
+        </div>
       </form>
+    </section>
+    <section class="messages">
+      <header>
+        <h2>Messages</h2>
+      </header>
+      <ul></ul>
     </section>
     <script src="./client.js"></script>
   </body>

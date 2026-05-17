@@ -1,11 +1,28 @@
-let active  = Boolean(localStorage.getItem('active'))
+let dark_mode = window.matchMedia?.('(prefers-color-scheme: dark)')?.matches
+
+window.matchMedia?.('(prefers-color-scheme: dark)')?.addEventListener('change', (event) => {
+  dark_mode = event.matches
+  document.documentElement.setAttribute('color-scheme', dark_mode ? 'dark' : 'light')
+})
+
+document.documentElement.setAttribute('color-scheme', dark_mode ? 'dark' : 'light')
+
+let active = Boolean(localStorage.getItem('active'))
 let counter = Number(localStorage.getItem('counter') ?? 0)
 let ping
 
 const fn = (ws) => () => {
   if (active) {
-    console.log(`SENT: ping: ${counter}`)
-    ws.send(`ping: ${counter++}`)
+    const content = `ping: ${counter++}`
+    ws.send(content)
+
+    const message = document.createElement("li")
+    message.classList.add("client")
+    message.classList.add("message")
+    message.innerHTML = `<p>${content}</p>`
+  
+    const messages = document.querySelector(".messages ul")
+    messages.appendChild(message)
   }
 }
 
@@ -17,6 +34,24 @@ const open = (ws) => () => {
     console.log('initializing ping interval')
     ping = setInterval(fn(ws), 1000)
   }
+
+  const message = document.createElement("li")
+  message.classList.add("server")
+  message.classList.add("event")
+  message.innerHTML = `<p>connected</p>`
+
+  const messages = document.querySelector(".messages ul")
+  messages.appendChild(message)
+}
+
+const message = (event) => {
+  const message = document.createElement("li")
+  message.classList.add("server")
+  message.classList.add("message")
+  message.innerHTML = `<p>${event.data}</p>`
+
+  const messages = document.querySelector(".messages ul")
+  messages.appendChild(message)
 }
 
 const clear = () => {
@@ -32,7 +67,31 @@ const init = (event) => {
 
   ws = new WebSocket(document.getElementById("url").value)
   ws.addEventListener("open", open(ws))
+  ws.addEventListener("message", message)
   ws.addEventListener("close", clear)
+}
+
+const disconnect = (event) => {
+  event?.preventDefault()
+
+  console.log("closing connection")
+  ws.close()
+  ws = undefined
+  active = false
+
+  const message = document.createElement("li")
+  message.classList.add("server")
+  message.classList.add("event")
+  message.innerHTML = `<p>disconnected</p>`
+
+  const messages = document.querySelector(".messages ul")
+  messages.appendChild(message)
+}
+
+const reset_counter = (event) => {
+  event.preventDefault()
+
+  counter = 0
 }
 
 const hide = () => {
@@ -45,16 +104,13 @@ const hide = () => {
   window.clearInterval(ping)
   ping = undefined
 
-  if (ws) {
-    console.log("closing connection")
-    ws.close()
-    ws = undefined
-    active = false
-  }
+  if (ws) disconnect()
 }
 
 document.getElementById("url").value = localStorage.getItem('url')
 document.getElementById("connect").addEventListener("click", init)
+document.getElementById("disconnect").addEventListener("click", disconnect)
+document.getElementById("reset-counter").addEventListener("click", reset_counter)
 
 window.addEventListener("pagehide", hide)
 
