@@ -13,7 +13,7 @@ let ping
 
 const fn = (ws) => () => {
   if (active) {
-    const content = `ping: ${counter++}`
+    const content = `count: ${counter++}`
     ws.send(content)
 
     const message = document.createElement("li")

@@ -7,5 +7,5 @@ export default ({
   message,
   server,
 }: Params) => {
-  server.sendText(`I hear you: ${message}`)
+  server.sendText(`Echoing: ${message}`)
 }
