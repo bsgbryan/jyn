@@ -99,13 +99,13 @@ h2 {
 }
 
 html[color-scheme=dark] .messages li {
-  --server-message-backdrop-color: #535;
-  --client-message-backdrop-color: #335;
+  --server-message-backdrop-color: linear-gradient(#535, #424);
+  --client-message-backdrop-color: linear-gradient(#353, #242);
 }
 
 html[color-scheme=light] .messages li {
-  --server-message-backdrop-color: #535;
-  --client-message-backdrop-color: #353;
+  --server-message-backdrop-color: linear-gradient(#535, #424);
+  --client-message-backdrop-color: linear-gradient(#353, #242);
 }
 
 .messages li {
@@ -123,11 +123,12 @@ html[color-scheme=light] .messages li {
   font-size: 1.25rem;
   margin: 0.5rem 0;
   padding: 0.5rem 1rem;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.75);
   width: fit-content;
 }
 
 .messages .client { align-items: flex-start }
-.messages .client p { background-color: var(--client-message-backdrop-color) }
+.messages .client p { background: var(--client-message-backdrop-color) }
 
 .messages .server { align-items: flex-end }
-.messages .server p { background-color: var(--server-message-backdrop-color) }
+.messages .server p { background: var(--server-message-backdrop-color) }
