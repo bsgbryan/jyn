@@ -1,18 +1,7 @@
-html[color-scheme=dark] {
-  --backdrop-color: #112;
-  --heading-text-color: #aa9;
-  --messages-backdrop-color: rgba(0, 0, 0, 0.125);
-}
+html[color-scheme=dark]  { --backdrop-color: #112 }
+html[color-scheme=light] { --backdrop-color: #eef }
 
-html[color-scheme=light] {
-  --backdrop-color: #eee;
-  --heading-text-color: #330;
-  --messages-backdrop-color: #ddc;
-}
-
-html {
-  background-color: var(--backdrop-color);
-}
+html { background-color: var(--backdrop-color) }
 
 body {
   display: flex;
@@ -21,9 +10,7 @@ body {
   overflow-y: hidden;
 }
 
-section {
-  width: 40rem;
-}
+section { width: 40rem }
 
 h2,
 .server .actions button,
@@ -31,10 +18,15 @@ h2,
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+html[color-scheme=dark]  h2 { --heading-text-color: #aa9 }
+html[color-scheme=light] h2 { --heading-text-color: #775 }
+
 h2 {
   color: var(--heading-text-color);
   font-size: 2rem;
 }
+
+h2:hover { cursor: default }
 
 .server input,
 .server .actions {
@@ -43,11 +35,14 @@ h2 {
   margin-right: auto;
 }
 
+html[color-scheme=dark]  .server input { --text-color: rgba(240, 240, 255, 0.9) }
+html[color-scheme=light] .server input { --text-color: rgba( 64,  64,  80, 0.9) }
+
 .server input {
   background-color: rgba(64, 64, 64, 0.125);
   border: 1px solid rgba(120, 120, 127.5, 0.9);
   border-radius: 0.5rem;
-  color: rgba(240, 240, 255, 0.9);
+  color: var(--text-color);
   display: block;
   font-size: 1.25rem;
   min-width: 20rem;
@@ -62,15 +57,30 @@ h2 {
   min-width: 25rem;
 }
 
+html[color-scheme=dark] .server .actions button {
+  --backdrop-color: #404;
+  --text-color: #fbf;
+}
+
+html[color-scheme=light] .server .actions button {
+  --backdrop-color: #b8b;
+  --text-color: white;
+}
+
 .server .actions button {
   border: 1px solid #848;
   border-radius: 0.25rem;
-  color: #fbf;
-  background-color: #404;
+  color: var(--text-color);
+  background-color: var(--backdrop-color);
   font-size: 1rem;
   padding-bottom: 0.25rem;
   width: 7rem;
 }
+
+.server .actions button:hover { cursor: pointer }
+
+html[color-scheme=dark]  .messages { --shadow-color: rgba(0, 0, 0, 1   ) }
+html[color-scheme=light] .messages { --shadow-color: rgba(0, 0, 0, 0.25) }
 
 .messages,
 .messages ul {
@@ -84,11 +94,39 @@ h2 {
   top: 12rem;
 }
 
+.messages header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.messages header h2 { margin-right: 1rem }
+
+html[color-scheme=dark] .messages header button {
+  --backdrop-color: #440;
+  --text-color: #ffb;
+}
+
+html[color-scheme=light] .messages header button {
+  --backdrop-color: #bb8;
+  --text-color: white;
+}
+
+.messages header button {
+  border: none;
+  border-radius: 0.25rem;
+  color: var(--text-color);
+  background-color: var(--backdrop-color);
+  font-size: 1rem;
+  padding-bottom: 0.25rem;
+  width: 5rem;
+}
+
 .messages ul {
-  background-color: var(--messages-backdrop-color);
+  background-color: rgba(0, 0, 0, 0.125);
   border-radius: 0.5rem;
   bottom: 1rem;
-  box-shadow: 0 3px 5px black;
+  box-shadow: 0 3px 5px var(--shadow-color);
   height: calc(100% - 7rem);
   left: 0;
   overflow-y: scroll;
@@ -98,16 +136,6 @@ h2 {
   padding: 0.5rem 1rem;
 }
 
-html[color-scheme=dark] .messages li {
-  --server-message-backdrop-color: linear-gradient(#535, #424);
-  --client-message-backdrop-color: linear-gradient(#353, #242);
-}
-
-html[color-scheme=light] .messages li {
-  --server-message-backdrop-color: linear-gradient(#535, #424);
-  --client-message-backdrop-color: linear-gradient(#353, #242);
-}
-
 .messages li {
   display: flex;
   flex-direction: column;
@@ -115,17 +143,33 @@ html[color-scheme=light] .messages li {
   padding-block-start: 0;
 }
 
+html[color-scheme=dark] .messages li p {
+  --client-message-backdrop-color: linear-gradient(#353, #242);
+  --server-message-backdrop-color: linear-gradient(#535, #424);
+  --text-color: rgba(255, 255, 255, 0.8);
+  --text-shadow-color: var(--shadow-color);
+}
+
+html[color-scheme=light] .messages li p {
+  --client-message-backdrop-color: linear-gradient(#afa, #9e9);
+  --server-message-backdrop-color: linear-gradient(#faf, #e9e);
+  --text-color: rgba(0, 0, 0, 0.5);
+  --text-shadow-color: transparent;
+}
+
 .messages li p {
   border-radius: 1rem;
-  box-shadow: 0 2px 3px black;
-  color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 2px 3px var(--shadow-color);
+  color: var(--text-color);
   display: block;
   font-size: 1.25rem;
   margin: 0.5rem 0;
   padding: 0.5rem 1rem;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.75);
+  text-shadow: 0 1px 1px var(--shadow-color);
   width: fit-content;
 }
+
+.messages li p:hover { cursor: default }
 
 .messages .client { align-items: flex-start }
 .messages .client p { background: var(--client-message-backdrop-color) }

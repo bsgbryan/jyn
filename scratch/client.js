@@ -94,6 +94,12 @@ const reset_counter = (event) => {
   counter = 0
 }
 
+const clear_messages = (event) => {
+  event.preventDefault()
+
+  document.querySelector(".messages ul").innerHTML = ""
+}
+
 const hide = () => {
   console.log('saving state on pagehide')
   localStorage.setItem('active', active ? "true": "")
@@ -111,6 +117,8 @@ document.getElementById("url").value = localStorage.getItem('url')
 document.getElementById("connect").addEventListener("click", init)
 document.getElementById("disconnect").addEventListener("click", disconnect)
 document.getElementById("reset-counter").addEventListener("click", reset_counter)
+
+document.getElementById("clear").addEventListener("click", clear_messages)
 
 window.addEventListener("pagehide", hide)
 

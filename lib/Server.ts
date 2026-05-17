@@ -22,11 +22,12 @@ const main = async () => {
     websocket: {
       data: {} as TestData,
       perMessageDeflate: true,
-      async open(ws) { await rz.load!({ madul: ws.data.madul }) },
-      async message(ws, message) {
-        await rz.handle!({ madul: ws.data.madul, message, server: ws })
+      async open(ws) {
+        await rz.load!({ madul: ws.data.madul })
+        console.log('connection opened', ws.data.madul)
       },
-      close(ws) { console.log('connection closed') },
+      async message(ws, message) { await rz.handle!({ madul: ws.data.madul, message, server: ws }) },
+      close(ws) { console.log('connection closed', ws.data.madul) },
     },
   })
 }
