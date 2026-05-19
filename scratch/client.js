@@ -18,7 +18,7 @@ const fn = (ws) => () => {
       madul: 'jyn:echo',
       content,
     })
-    console.log(json)
+
     ws.send(json)
 
     const message = document.createElement("li")
@@ -50,10 +50,12 @@ const open = (ws) => () => {
 }
 
 const message = (event) => {
+  const json = JSON.parse(event.data)
+
   const message = document.createElement("li")
   message.classList.add("server")
   message.classList.add("message")
-  message.innerHTML = `<p>${event.data}</p>`
+  message.innerHTML = `<p>${json.content}</p>`
 
   const messages = document.querySelector(".messages ul")
   messages.appendChild(message)

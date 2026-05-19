@@ -9,7 +9,7 @@ import ROOT from "./root"
 type Session = { id: string }
 
 type Message = {
-  type: 'BINARY' | 'JSON' | 'TEXT'
+  type: 'BINARY' | 'ERROR' | 'JSON' | 'TEXT'
   content: unknown
 }
 
@@ -38,19 +38,11 @@ const main = async () => {
         await rz.handle!({
           madul,
           message: content,
-          on: {
-            response: (m: Message) => {
-              switch (m.type) {
-                case 'BINARY': ws.sendBinary(m as unknown as BufferSource); return
-                case 'JSON': ws.sendText(JSON.stringify(m.content)); return
-                case 'TEXT': ws.sendText(m.content as string); return
-
-                default: ws.sendText(JSON.stringify({
-                  type: 'ERROR',
-                  content: 'Unsupported message content type',
-                })); return
-              }
-            }
+          send: {
+            binary: (content: BufferSource) => ws.sendBinary(content),
+            error:  (content: string      ) => ws.sendText(JSON.stringify({ format: 'ERROR', content })),
+            json:   (content: string      ) => ws.sendText(JSON.stringify({ format: 'JSON',  content })),
+            text:   (content: string      ) => ws.sendText(JSON.stringify({ format: 'TEXT',  content })),
           },
           session_id: ws.data.id,
         })

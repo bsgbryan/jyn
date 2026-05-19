@@ -11,7 +11,14 @@ type $launchParams = {
   instances: number
 }
 
-const responders: Map<string, CallableFunction> = new Map()
+type Senders = {
+  binary: CallableFunction
+  error:  CallableFunction
+  json:   CallableFunction
+  text:   CallableFunction
+}
+
+const responders: Map<string, Senders> = new Map()
 
 export const $launch = async ({
   port,
@@ -20,7 +27,18 @@ export const $launch = async ({
   if (cluster.isPrimary) {
     for (let c = 0; c < instances; c++) {
       const w = new Worker(new URL("RogueOne.ts", import.meta.url), { ref: true })
-      w.onmessage = (event: MessageEvent) => responders.get(event.data.session_id)!({ ...event.data })
+      w.onmessage = (event: MessageEvent) => {
+        const r = responders.get(event.data.session_id)!
+
+        switch (event.data.type) {
+          case 'BINARY': r.binary(event.data.content); return
+          case 'ERROR':  r.error(event.data.content); return
+          case 'JSON':   r.json(JSON.stringify(event.data.content)); return
+          case 'TEXT':   r.text(event.data.content); return
+
+          default:  r.error(`${event.data.type} is not a supported content type`); return
+        }
+      }
     }
 
     console.log(instances, `worker${instances > 1 ? 's' : ''} listening on port`, port)
@@ -36,8 +54,11 @@ const next = () => ++current < workers.length ? current : 0
 
 type HandleParams = LoadParam & {
   message: string
-  on: {
-    response: CallableFunction
+  send: {
+    binary: CallableFunction
+    error:  CallableFunction
+    json:   CallableFunction
+    text:   CallableFunction
   }
   session_id: string
 }
@@ -45,10 +66,10 @@ type HandleParams = LoadParam & {
 export const handle = ({
   madul,
   message,
-  on: {response},
+  send,
   session_id,
 }: HandleParams) => {
-  if (!responders.has(session_id)) responders.set(session_id, response)
+  if (!responders.has(session_id)) responders.set(session_id, send)
   workers[next()]?.postMessage({ madul, message, session_id })
 }
 
