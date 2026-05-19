@@ -4,9 +4,9 @@ import cluster from "cluster"
 import type { Madul } from "@bsgbryan/madul/lib/types"
 import bootstrap from "@bsgbryan/madul"
 
-const listening = (w: number) => `worker${w > 1 ? 's' : ''} listening on port`
+import ROOT from "./root"
 
-type $launchArguments = {
+type $launchParams = {
   self: object
   port: number
   instances: number
@@ -17,15 +17,14 @@ const responders: Map<string, CallableFunction> = new Map()
 export const $launch = async ({
   port,
   instances,
-}: $launchArguments) => {
+}: $launchParams) => {
   if (cluster.isPrimary) {
     for (let c = 0; c < instances; c++) {
       const w = new Worker(new URL("RogueOne.ts", import.meta.url), { ref: true })
-      w.onerror = function (this: AbstractWorker, ev: ErrorEvent) { console.error(ev) }
-      w.onmessage = (event: MessageEvent) =>
-          responders.get(event.data.session_id)!({ message: event.data })
+      w.onmessage = (event: MessageEvent) => responders.get(event.data.session_id)!({ ...event.data })
     }
-    console.log(instances, listening(instances), port)
+
+    console.log(instances, `worker${instances > 1 ? 's' : ''} listening on port`, port)
   }
 }
 
@@ -52,28 +51,19 @@ export const handle = ({
   session_id,
 }: HandleParams) => {
   if (!responders.has(session_id)) responders.set(session_id, response)
-
-  workers[0]?.postMessage({
-    action: 'handle',
-    madul,
-    message,
-    session_id,
-  })
+  workers[0]?.postMessage({ action: 'handle', madul, message, session_id })
 }
 
-process.on("worker", (w: Worker) => workers.push(w))
-
 const workers: Worker[] = []
+
+process.on("worker", (w: Worker) => workers.push(w))
 
 onmessage = async ({ data: { action, madul, ...rest } }) => {
   switch (action) {
     case 'handle': {
       if (!handlers.has(madul)) {
         try {
-          const root = madul.startsWith('jyn') ?
-            `${__dirname}/..`
-            :
-            undefined
+          const root = madul.startsWith('jyn') ? ROOT : undefined
 
           handlers.set(madul, await bootstrap(madul, undefined, root))
         }
