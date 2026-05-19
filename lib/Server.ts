@@ -1,20 +1,24 @@
+import type { BufferSource } from "bun"
+import { randomUUIDv7 } from "bun"
+
 import madul from "@bsgbryan/madul"
 
 import params from "./params"
 
 type TestData = {
-  madul: string
+  session_id: string
 }
 
 const main = async () => {
   const args = await params()
-  const rz = await madul('+RogueZero', args, `${__dirname}/..`)
+  const rz = await madul('+RogueOne', args, `${__dirname}/..`)
 
   Bun.serve({
     hostname: args.host,
     port: args.port,
     fetch(req, server) {
-      return server.upgrade(req, { data: { madul: new URL(req.url).pathname } }) ?
+      const session_id = randomUUIDv7()
+      return server.upgrade(req, { data: { session_id } }) ?
         new Response("🎉")
         :
         new Response("WebSocket upgrade error", { status: 400 })
@@ -22,11 +26,23 @@ const main = async () => {
     websocket: {
       data: {} as TestData,
       perMessageDeflate: true,
-      async open(ws) {
-        await rz.load!({ madul: ws.data.madul })
-        console.log('connection opened', ws.data.madul)
+      async open(ws) { console.log(`session ${ws.data.session_id} opened`) },
+      async message(ws, message) {
+        const { madul, content } = JSON.parse(message as string)
+        await rz.handle!({
+          madul,
+          message: content,
+          on: {
+            response: (m: { message: { type: string, content: unknown } }) => {
+              switch (m.message.type) {
+                case 'TEXT': ws.sendText(JSON.stringify(m)); return
+                case 'BINARY': ws.sendBinary(m as unknown as BufferSource); return
+              }
+            }
+          },
+          session_id: ws.data.session_id,
+        })
       },
-      async message(ws, message) { await rz.handle!({ madul: ws.data.madul, message, server: ws }) },
       close(ws) { console.log('connection closed', ws.data.madul) },
     },
   })

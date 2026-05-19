@@ -1,11 +1,15 @@
 type Params = {
   message: string
-  server: Bun.ServerWebSocket
+  session_id: string
 }
 
 export default ({
   message,
-  server,
+  session_id,
 }: Params) => {
-  server.sendText(`Echoing: ${message}`)
+  postMessage({
+		content: `Echoing: ${message}`,
+		session_id,
+		type: 'TEXT',
+	})
 }

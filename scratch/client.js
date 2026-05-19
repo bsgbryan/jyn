@@ -14,13 +14,18 @@ let ping
 const fn = (ws) => () => {
   if (active) {
     const content = `count: ${counter++}`
-    ws.send(content)
+    const json = JSON.stringify({
+      madul: 'jyn:echo',
+      content,
+    })
+    console.log(json)
+    ws.send(json)
 
     const message = document.createElement("li")
     message.classList.add("client")
     message.classList.add("message")
     message.innerHTML = `<p>${content}</p>`
-  
+
     const messages = document.querySelector(".messages ul")
     messages.appendChild(message)
   }
