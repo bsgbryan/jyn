@@ -1,0 +1,26 @@
+export type $launchParams = {
+  self: object
+  port: number
+  instances: number
+}
+
+export type Session = { id: string }
+
+export type Senders = {
+  binary: CallableFunction
+  error:  CallableFunction
+  json:   CallableFunction
+  text:   CallableFunction
+}
+
+export type HandleParams = {
+  madul: string
+  message: string
+  send: {
+    binary: CallableFunction
+    error:  CallableFunction
+    json:   CallableFunction
+    text:   CallableFunction
+  }
+  session_id: string
+}

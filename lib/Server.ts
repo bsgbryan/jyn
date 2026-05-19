@@ -1,17 +1,12 @@
 import type { BufferSource } from "bun"
+import type { Session } from "./types"
+
 import { randomUUIDv7 } from "bun"
 
 import madul from "@bsgbryan/madul"
 
 import params from "./params"
 import ROOT from "./root"
-
-type Session = { id: string }
-
-type Message = {
-  type: 'BINARY' | 'ERROR' | 'JSON' | 'TEXT'
-  content: unknown
-}
 
 const main = async () => {
   const args = await params()

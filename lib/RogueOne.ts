@@ -1,22 +1,15 @@
+import type { Madul } from "@bsgbryan/madul/lib/types"
+import type {
+  $launchParams,
+  HandleParams,
+  Senders,
+} from "+types"
+
 import cluster from "cluster"
 
-import type { Madul } from "@bsgbryan/madul/lib/types"
 import bootstrap from "@bsgbryan/madul"
 
 import ROOT from "./root"
-
-type $launchParams = {
-  self: object
-  port: number
-  instances: number
-}
-
-type Senders = {
-  binary: CallableFunction
-  error:  CallableFunction
-  json:   CallableFunction
-  text:   CallableFunction
-}
 
 const responders: Map<string, Senders> = new Map()
 
@@ -45,23 +38,10 @@ export const $launch = async ({
   }
 }
 
-type LoadParam = { madul: string }
-
 const handlers: Map<string, Madul> = new Map()
 
 let current = 0
 const next = () => ++current < workers.length ? current : 0
-
-type HandleParams = LoadParam & {
-  message: string
-  send: {
-    binary: CallableFunction
-    error:  CallableFunction
-    json:   CallableFunction
-    text:   CallableFunction
-  }
-  session_id: string
-}
 
 export const handle = ({
   madul,
