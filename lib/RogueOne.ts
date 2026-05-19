@@ -32,9 +32,8 @@ type LoadParam = { madul: string }
 
 const handlers: Map<string, Madul> = new Map()
 
-export const load = async ({ madul }: LoadParam) => {
-  workers[0]?.postMessage({ action: 'load', madul})
-}
+let current = 0
+const next = () => ++current < workers.length ? current : 0
 
 type HandleParams = LoadParam & {
   message: string
@@ -51,30 +50,25 @@ export const handle = ({
   session_id,
 }: HandleParams) => {
   if (!responders.has(session_id)) responders.set(session_id, response)
-  workers[0]?.postMessage({ action: 'handle', madul, message, session_id })
+  workers[next()]?.postMessage({ madul, message, session_id })
 }
 
 const workers: Worker[] = []
 
 process.on("worker", (w: Worker) => workers.push(w))
 
-onmessage = async ({ data: { action, madul, ...rest } }) => {
-  switch (action) {
-    case 'handle': {
-      if (!handlers.has(madul)) {
-        try {
-          const root = madul.startsWith('jyn') ? ROOT : undefined
+onmessage = async ({ data: { madul, ...rest } }) => {
+  if (!handlers.has(madul)) {
+    try {
+      const root = madul.startsWith('jyn') ? ROOT : undefined
 
-          handlers.set(madul, await bootstrap(madul, undefined, root))
-        }
-        catch (e) {
-          console.error('Could not load', madul, e)
-          return
-        }
-      }
-
-      handlers.get(madul)!.default!({...rest})
+      handlers.set(madul, await bootstrap(madul, undefined, root))
+    }
+    catch (e) {
+      console.error('Could not load', madul, e)
       return
     }
   }
+
+  handlers.get(madul)!.default!({...rest})
 }
