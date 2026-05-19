@@ -9,7 +9,7 @@ import ROOT from "./root"
 type Session = { id: string }
 
 type Message = {
-  type: 'TEXT' | 'BINARY'
+  type: 'BINARY' | 'JSON' | 'TEXT'
   content: unknown
 }
 
@@ -41,8 +41,9 @@ const main = async () => {
           on: {
             response: (m: Message) => {
               switch (m.type) {
-                case 'TEXT': ws.sendText(JSON.stringify(m)); return
                 case 'BINARY': ws.sendBinary(m as unknown as BufferSource); return
+                case 'JSON': ws.sendText(JSON.stringify(m.content)); return
+                case 'TEXT': ws.sendText(m.content as string); return
 
                 default: ws.sendText(JSON.stringify({
                   type: 'ERROR',
