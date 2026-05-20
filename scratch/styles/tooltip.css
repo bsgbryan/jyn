@@ -1,9 +1,18 @@
+html[color-scheme=dark]  p[role="tooltip"] {
+  --backdrop-color: rgba(191, 191, 191, 0.25);
+  --text-color: rgba(191, 191, 191, 0.9);
+}
+html[color-scheme=light] p[role="tooltip"] {
+  --backdrop-color: rgba(64, 64, 64, 0.25);
+  --text-color: rgba(64, 64, 64, 0.9);
+}
+
 p[role="tooltip"] {
   backdrop-filter: blur(20px);
-  background-color: rgba(255, 255, 255, 0.25);
+  background-color: var(--backdrop-color);
   border-radius: 0.25rem;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
-  color: white;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.375);
+  color: var(--text-color);
   opacity: 0;
   padding: 0.5rem 1rem;
   position: absolute;
@@ -12,10 +21,12 @@ p[role="tooltip"] {
   visibility: hidden;
   z-index: 1000;
 }
+
 button[aria-describedby]:hover,
 button[aria-describedby]:focus {
   position: relative;
 }
+
 button[aria-describedby]:hover + p[role="tooltip"],
 button[aria-describedby]:focus + p[role="tooltip"],
 p[role="tooltip"]:hover,
