@@ -2,7 +2,16 @@
 <html>
   <head>
     <title>jyn test client</title>
-    <link rel="stylesheet" href="./client.css">
+
+    <link rel="stylesheet" href="./styles/global.css">
+    <link rel="stylesheet" href="./styles/heading.css">
+    <link rel="stylesheet" href="./styles/text.css">
+    <link rel="stylesheet" href="./styles/server.css">
+    <link rel="stylesheet" href="./styles/messages.css">
+    <link rel="stylesheet" href="./styles/tooltip.css">
+
+    <script defer src="./fontawesome/fontawesome.min.js"></script>
+    <script defer src="./fontawesome/all.min.js"></script>
   </head>
   <body>
     <section class="server">
@@ -12,16 +21,24 @@
       <form>
         <input type="url" name="url" id="url" placeholder="ws://localhost:1138/echo">
         <div class="actions">
-          <button id="connect">connect</button>
-          <button id="disconnect">disconnect</button>
-          <button id="reset-counter">reset counter</button>
+          <button id="connect" aria-describedby="connect-tooltip">
+            <i class="fa-duotone fa-regular fa-plug-circle-plus"></i>
+          </button>
+          <p role="tooltip" id="connect-tooltip">connect</p>
+          <button id="disconnect" aria-describedby="disconnect-tooltip">
+            <i class="fa-duotone fa-regular fa-plug-circle-minus"></i>
+          </button>
+          <p role="tooltip" id="disconnect-tooltip">disconnect</p>
         </div>
       </form>
     </section>
     <section class="messages">
       <header>
         <h2>messages</h2>
-        <button id="clear">clear</button>
+        <button id="clear" aria-describedby="clear-tooltip">
+          <i class="fa-duotone fa-regular fa-broom-wide"></i>
+        </button>
+        <p role="tooltip" id="clear-tooltip">clear all messages</p>
       </header>
       <ul></ul>
     </section>

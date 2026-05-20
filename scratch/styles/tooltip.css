@@ -1,0 +1,29 @@
+p[role="tooltip"] {
+  backdrop-filter: blur(20px);
+  background-color: rgba(255, 255, 255, 0.25);
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+  color: white;
+  opacity: 0;
+  padding: 0.5rem 1rem;
+  position: absolute;
+  top: 3.5rem;
+  transition: all 0.33s;
+  visibility: hidden;
+  z-index: 1000;
+}
+button[aria-describedby]:hover,
+button[aria-describedby]:focus {
+  position: relative;
+}
+button[aria-describedby]:hover + p[role="tooltip"],
+button[aria-describedby]:focus + p[role="tooltip"],
+p[role="tooltip"]:hover,
+p[role="tooltip"]:focus {
+  opacity: 1;
+  visibility: visible;
+}
+
+#connect-tooltip    { left: -0.25rem }
+#clear-tooltip      { left:  6.5rem  }
+#disconnect-tooltip { left:  3rem    }

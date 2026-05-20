@@ -1,0 +1,13 @@
+html[color-scheme=dark]  { --backdrop-color: #112 }
+html[color-scheme=light] { --backdrop-color: #eef }
+
+html { background-color: var(--backdrop-color) }
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: hidden;
+}
+
+section { width: 40rem }

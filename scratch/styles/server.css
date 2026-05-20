@@ -1,0 +1,64 @@
+.server,
+.server form {
+  display: flex;
+  flex-direction: row;
+}
+
+.server { width: 40rem }
+
+.server header { width: 7rem }
+
+.server form { width: auto }
+
+html[color-scheme=dark]  .server input { --text-color: rgba(240, 240, 255, 0.9) }
+html[color-scheme=light] .server input { --text-color: rgba( 64,  64,  80, 0.9) }
+
+.server input {
+  align-self: center;
+  background-color: rgba(64, 64, 64, 0.125);
+  border: 1px solid rgba(120, 120, 127.5, 0.9);
+  border-radius: 0.5rem;
+  color: var(--text-color);
+  display: block;
+  font-size: 1.25rem;
+  height: 1.25rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  min-width: 22rem;
+  padding: 0.25rem 0.75rem 0.5rem;
+  text-align: center;
+}
+
+.server .actions {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-items: center;
+  position: relative;
+}
+
+html[color-scheme=dark] .server .actions button {
+  --backdrop-color: #404;
+  --text-color: #fbf;
+}
+
+html[color-scheme=light] .server .actions button {
+  --backdrop-color: #b8b;
+  --text-color: white;
+}
+
+.server .actions button {
+  border: 1px solid #848;
+  border-radius: 0.25rem;
+  color: var(--text-color);
+  background-color: var(--backdrop-color);
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  width: fit-content;
+  height: fit-content;
+}
+
+.server .actions button:hover { cursor: pointer }
+
+.server .actions #connect,
+.server .actions #disconnect { margin-left: 1rem }

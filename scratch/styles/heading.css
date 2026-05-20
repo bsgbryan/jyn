@@ -1,0 +1,9 @@
+html[color-scheme=dark]  h2 { --heading-text-color: #aa9 }
+html[color-scheme=light] h2 { --heading-text-color: #775 }
+
+h2 {
+  color: var(--heading-text-color);
+  font-size: 2rem;
+}
+
+h2:hover { cursor: default }

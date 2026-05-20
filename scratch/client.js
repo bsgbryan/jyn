@@ -123,7 +123,7 @@ const hide = () => {
 document.getElementById("url").value = localStorage.getItem('url')
 document.getElementById("connect").addEventListener("click", init)
 document.getElementById("disconnect").addEventListener("click", disconnect)
-document.getElementById("reset-counter").addEventListener("click", reset_counter)
+// document.getElementById("reset-counter").addEventListener("click", reset_counter)
 
 document.getElementById("clear").addEventListener("click", clear_messages)
 
