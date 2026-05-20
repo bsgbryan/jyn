@@ -95,12 +95,6 @@ const disconnect = (event) => {
   messages.appendChild(message)
 }
 
-const reset_counter = (event) => {
-  event.preventDefault()
-
-  counter = 0
-}
-
 const clear_messages = (event) => {
   event.preventDefault()
 
