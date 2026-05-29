@@ -1,0 +1,87 @@
+.madul,
+.madul form {
+  display: flex;
+  flex-direction: row;
+}
+
+.madul { width: 40rem }
+
+.madul header { width: 7rem }
+
+.madul form { width: auto }
+
+.madul form .fields {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+html[color-scheme=dark]  .madul input { --text-color: rgba(240, 240, 255, 0.9) }
+html[color-scheme=light] .madul input { --text-color: rgba( 64,  64,  80, 0.9) }
+
+.madul input {
+  align-self: center;
+  background-color: rgba(64, 64, 64, 0.125);
+  border: 1px solid rgba(120, 120, 127.5, 0.9);
+  color: var(--text-color);
+  display: block;
+  font-size: 1.25rem;
+  height: 1.25rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  min-width: 22rem;
+  padding: 0.25rem 0.75rem 0.5rem;
+  text-align: center;
+}
+
+.madul form input#madul {
+  border-bottom: 1px solid rgba(120, 120, 127.5, 0.5);
+  border-top-left-radius:  0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.madul form input#content {
+  border-bottom-left-radius:  0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  border-top: none;
+}
+
+.madul .actions {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-items: center;
+  position: relative;
+}
+
+html[color-scheme=dark] .madul .actions button {
+  --backdrop-color: #404;
+  --text-color: #fbf;
+}
+
+html[color-scheme=light] .madul .actions button {
+  --backdrop-color: #b8b;
+  --text-color: white;
+}
+
+.madul .actions button {
+  border: 1px solid #848;
+  border-radius: 0.25rem;
+  color: var(--text-color);
+  background-color: var(--backdrop-color);
+  font-size: 2.5rem;
+  margin-left: 1rem;
+  padding: 0.5rem;
+  width: 7rem;
+  height: fit-content;
+}
+
+.madul .actions button:hover { cursor: pointer }
+
+.madul .actions #send-tooltip {
+  left: 0rem;
+  text-align: center;
+  top: 4.125rem;
+  width: 7rem;
+}

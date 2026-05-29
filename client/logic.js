@@ -11,34 +11,34 @@ let active = Boolean(localStorage.getItem('active'))
 let counter = Number(localStorage.getItem('counter') ?? 0)
 let ping
 
-const fn = (ws) => () => {
-  if (active) {
-    const content = `count: ${counter++}`
-    const json = JSON.stringify({
-      madul: 'jyn:echo',
-      content,
-    })
+// const fn = (ws) => () => {
+//   if (active) {
+//     const content = `count: ${counter++}`
+//     const json = JSON.stringify({
+//       madul: 'jyn:echo',
+//       content,
+//     })
 
-    ws.send(json)
+//     ws.send(json)
 
-    const message = document.createElement("li")
-    message.classList.add("client")
-    message.classList.add("message")
-    message.innerHTML = `<p>${content}</p>`
+//     const message = document.createElement("li")
+//     message.classList.add("client")
+//     message.classList.add("message")
+//     message.innerHTML = `<p>${content}</p>`
 
-    const messages = document.querySelector(".messages ul")
-    messages.appendChild(message)
-  }
-}
+//     const messages = document.querySelector(".messages ul")
+//     messages.appendChild(message)
+//   }
+// }
 
-const open = (ws) => () => {
+const open = () => {
   console.log("opened connection to", document.getElementById("url").value)
   active = true
 
-  if (!ping) {
-    console.log('initializing ping interval')
-    ping = setInterval(fn(ws), 1000)
-  }
+  // if (!ping) {
+  //   console.log('initializing ping interval')
+  //   ping = setInterval(fn(ws), 1000)
+  // }
 
   const message = document.createElement("li")
   message.classList.add("server")
@@ -50,12 +50,10 @@ const open = (ws) => () => {
 }
 
 const message = (event) => {
-  const json = JSON.parse(event.data)
-
   const message = document.createElement("li")
   message.classList.add("server")
   message.classList.add("message")
-  message.innerHTML = `<p>${json.content}</p>`
+  message.innerHTML = `<p>${event.data}</p>`
 
   const messages = document.querySelector(".messages ul")
   messages.appendChild(message)
@@ -73,7 +71,7 @@ const init = (event) => {
   if (ping) clear()
 
   ws = new WebSocket(document.getElementById("url").value)
-  ws.addEventListener("open", open(ws))
+  ws.addEventListener("open", open)
   ws.addEventListener("message", message)
   ws.addEventListener("close", clear)
 }
@@ -93,6 +91,23 @@ const disconnect = (event) => {
 
   const messages = document.querySelector(".messages ul")
   messages.appendChild(message)
+}
+
+const send_message = (event) => {
+  event?.preventDefault()
+
+  const madul = document.getElementById("madul").value
+  const content = document.getElementById("content").value
+
+  const message = document.createElement("li")
+  message.classList.add("client")
+  message.classList.add("event")
+  message.innerHTML = `<p>${madul}: ${content}</p>`
+
+  const messages = document.querySelector(".messages ul")
+  messages.appendChild(message)
+
+  ws.send(JSON.stringify({ madul, content }))
 }
 
 const clear_messages = (event) => {
@@ -117,7 +132,7 @@ const hide = () => {
 document.getElementById("url").value = localStorage.getItem('url')
 document.getElementById("connect").addEventListener("click", init)
 document.getElementById("disconnect").addEventListener("click", disconnect)
-// document.getElementById("reset-counter").addEventListener("click", reset_counter)
+document.getElementById("send").addEventListener("click", send_message)
 
 document.getElementById("clear").addEventListener("click", clear_messages)
 

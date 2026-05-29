@@ -62,11 +62,24 @@ const get = async (path: string, params: URLSearchParams, headers: Headers) => {
   return sad
 }
 
+const send = (
+  server: Bun.Server<Session>,
+  ws: Bun.ServerWebSocket<Session>,
+) => ({
+  binary: (content: BufferSource) => ws.sendBinary(content),
+  error:  (content: string      ) => ws.sendText(JSON.stringify({ format: 'ERROR', content })),
+  json:   (content: string      ) => ws.sendText(JSON.stringify({ format: 'JSON',  content })),
+  text:   (content: string      ) => ws.sendText(JSON.stringify({ format: 'TEXT',  content })),
+
+  subscribe: (channel: string) => ws.subscribe(channel),
+  publish: (channel: string, content: string) => server.publish(channel, content),
+})
+
 const main = async () => {
   const args = await params()
   const casian = await madul('+RogueOne', args, ROOT)
 
-  Bun.serve({
+  const server = Bun.serve({
     hostname: args.host,
     port: args.port,
     async fetch(req, server) {
@@ -93,12 +106,7 @@ const main = async () => {
         await casian.handle!({
           madul,
           message: content,
-          send: {
-            binary: (content: BufferSource) => ws.sendBinary(content),
-            error:  (content: string      ) => ws.sendText(JSON.stringify({ format: 'ERROR', content })),
-            json:   (content: string      ) => ws.sendText(JSON.stringify({ format: 'JSON',  content })),
-            text:   (content: string      ) => ws.sendText(JSON.stringify({ format: 'TEXT',  content })),
-          },
+          send: send(server, ws),
           session_id: ws.data.id,
         })
       },

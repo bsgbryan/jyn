@@ -22,6 +22,11 @@ export const $launch = async ({
       const w = new Worker(new URL("RogueOne.ts", import.meta.url), { ref: true })
       w.onmessage = (event: MessageEvent) => {
         const r = responders.get(event.data.session_id)!
+        
+        switch (event.data.action) {
+          case 'PUBLISH': r.publish(event.data.channel, JSON.stringify(event.data.content)); return
+          case 'SUBSCRIBE': r.subscribe(event.data.channel); return
+        }
 
         switch (event.data.format) {
           case 'BINARY': r.binary(event.data.content); return

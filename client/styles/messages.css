@@ -44,6 +44,8 @@ html[color-scheme=light] .messages header button {
 
 .messages header button:hover { cursor: pointer }
 
+.messages #clear-tooltip { left: 6.5rem }
+
 .messages ul {
   background-color: rgba(0, 0, 0, 0.125);
   border-radius: 0.5rem;

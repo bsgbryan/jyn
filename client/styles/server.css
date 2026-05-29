@@ -62,3 +62,6 @@ html[color-scheme=light] .server .actions button {
 
 .server .actions #connect,
 .server .actions #disconnect { margin-left: 1rem }
+
+.server .actions #connect-tooltip    { left: -0.25rem }
+.server .actions #disconnect-tooltip { left:  3rem    }

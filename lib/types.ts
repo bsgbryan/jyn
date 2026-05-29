@@ -11,6 +11,9 @@ export type Senders = {
   error:  CallableFunction
   json:   CallableFunction
   text:   CallableFunction
+
+  publish:   CallableFunction
+  subscribe: CallableFunction
 }
 
 export type HandleParams = {
@@ -21,6 +24,9 @@ export type HandleParams = {
     error:  CallableFunction
     json:   CallableFunction
     text:   CallableFunction
+
+    subscribe: CallableFunction
+    publish:   CallableFunction
   }
   session_id: string
 }

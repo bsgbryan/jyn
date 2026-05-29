@@ -17,7 +17,7 @@ p[role="tooltip"] {
   padding: 0.5rem 1rem;
   position: absolute;
   top: 3.5rem;
-  transition: all 0.33s;
+  transition: all 0.33s ease;
   visibility: hidden;
   z-index: 1000;
 }
@@ -34,7 +34,3 @@ p[role="tooltip"]:focus {
   opacity: 1;
   visibility: visible;
 }
-
-#connect-tooltip    { left: -0.25rem }
-#clear-tooltip      { left:  6.5rem  }
-#disconnect-tooltip { left:  3rem    }
