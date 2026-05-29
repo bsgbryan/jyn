@@ -1,6 +1,6 @@
 {
   "name": "@bsgbryan/jyn",
-  "version": "2026.05.31",
+  "version": "2026.06.01",
   "description": "A simple, fully asynchronous, web socket Mädūl server",
   "homepage": "https://github.com/bsgbryan/jyn#readme",
   "author": "Bryan Maynard <bsgbryan@gmail.com> (https://bsgbryan.com)",
@@ -9,6 +9,7 @@
   },
   "files": [
     "index.ts",
+    "tsconfig.json",
     "lib/",
     "client/"
   ],
