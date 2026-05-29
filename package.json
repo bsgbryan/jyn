@@ -1,14 +1,16 @@
 {
   "name": "@bsgbryan/jyn",
-  "version": "2026.05.28",
+  "version": "2026.05.31",
   "description": "A simple, fully asynchronous, web socket Mädūl server",
   "homepage": "https://github.com/bsgbryan/jyn#readme",
   "author": "Bryan Maynard <bsgbryan@gmail.com> (https://bsgbryan.com)",
   "bin": {
-    "jyn": "index.js"
+    "jyn": "./index.ts"
   },
   "files": [
-    "lib"
+    "index.ts",
+    "lib/",
+    "client/"
   ],
   "keywords": [
     "api",
