@@ -22,16 +22,16 @@
   "bugs": {
     "url": "https://github.com/bsgbryan/jyn/issues"
   },
-  "license": "MIT",
-  "dependencies": {
-    "@bsgbryan/madul": "^2.0.7",
-    "yargs": "^18.0.0"
-  },
+  "type": "module",
   "directories": {
     "lib": "lib",
     "test": "test"
   },
-  "type": "module",
+  "license": "MIT",
+  "dependencies": {
+    "@bsgbryan/madul": "^2026.5.31",
+    "yargs": "^18.0.0"
+  },
   "devDependencies": {
     "@types/bun": "latest",
     "@types/yargs": "^17.0.35"

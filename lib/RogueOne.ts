@@ -1,4 +1,4 @@
-import type { Madul } from "@bsgbryan/madul/lib/types"
+import type { Madul } from "@bsgbryan/madul"
 import type {
   $launchParams,
   HandleParams,

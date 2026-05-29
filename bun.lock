@@ -5,7 +5,7 @@
     "": {
       "name": "@bsgbryan/jyn",
       "dependencies": {
-        "@bsgbryan/madul": "^2.0.7",
+        "@bsgbryan/madul": "^2026.5.31",
         "yargs": "^18.0.0",
       },
       "devDependencies": {
@@ -18,7 +18,7 @@
     },
   },
   "packages": {
-    "@bsgbryan/madul": ["@bsgbryan/madul@2.0.7", "", { "dependencies": { "ansi-colors": "^4.1.3", "comment-json": "^4.2.5" } }, "sha512-lRWJ/SyXOIFdZhfb8xctZnlHKzQi6wHgQBthk9IB5UOkzVJ9oBvjpWtem4OIqlYw1ecmPpd65+H5TyMnxY5WGQ=="],
+    "@bsgbryan/madul": ["@bsgbryan/madul@2026.5.31", "", { "dependencies": { "ansi-colors": "^4.1.3", "comment-json": "^4.2.5" }, "peerDependencies": { "typescript": "^6.0.3" } }, "sha512-6mihrcUDLExaINDpmRiNzZY9UJjvy0ZlDz7wpDZO8zOqD60uqZqNXQ8tATwkdjiqKLNO6W47uImkIfdrb2L2fA=="],
 
     "@types/bun": ["@types/bun@1.3.14", "", { "dependencies": { "bun-types": "1.3.14" } }, "sha512-h1hFqFVcvAvD9j9K7ZW7vd82aSA+rTdznZa+5bwvCwqSB1jmmfLcbIWhOLx1/+boy/xmjgCs/OMUL8hRJSmnPw=="],
 
