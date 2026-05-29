@@ -10,6 +10,6 @@ export default ({
   postMessage({
 		content: `Echoing: ${message}`,
 		session_id,
-		type: 'TEXT',
+		format: 'TEXT',
 	})
 }

@@ -24,3 +24,8 @@ export type HandleParams = {
   }
   session_id: string
 }
+
+export type Result = string | {
+  content?: string,
+  format?: keyof object,
+}

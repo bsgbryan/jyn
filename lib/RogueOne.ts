@@ -23,13 +23,13 @@ export const $launch = async ({
       w.onmessage = (event: MessageEvent) => {
         const r = responders.get(event.data.session_id)!
 
-        switch (event.data.type) {
+        switch (event.data.format) {
           case 'BINARY': r.binary(event.data.content); return
           case 'ERROR':  r.error(event.data.content); return
           case 'JSON':   r.json(JSON.stringify(event.data.content)); return
           case 'TEXT':   r.text(event.data.content); return
 
-          default:  r.error(`${event.data.type} is not a supported content type`); return
+          default:  r.error(`${event.data.type} is not a supported content format`); return
         }
       }
     }
