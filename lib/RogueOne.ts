@@ -62,7 +62,7 @@ const workers: Worker[] = []
 
 process.on("worker", (w: Worker) => workers.push(w))
 
-onmessage = async ({ data: { madul, ...rest } }) => {
+onmessage = async ({ data: { madul, session_id, message } }) => {
   if (!handlers.has(madul)) {
     try {
       const root = madul.startsWith('jyn') ? ROOT : undefined
@@ -75,5 +75,11 @@ onmessage = async ({ data: { madul, ...rest } }) => {
     }
   }
 
-  handlers.get(madul)!.default!({...rest})
+  handlers.get(madul)!.default!({
+    session_id,
+    message: typeof message === 'string' ?
+      JSON.parse(message)
+      :
+      message
+  })
 }

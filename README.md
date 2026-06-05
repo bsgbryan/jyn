@@ -33,10 +33,10 @@ What does this look like in practice?
 1. `wscat -c ws://localhost:1138`
 1. `{"madul": "+greet", "content": {"name": "World"}}`
 
-This should result in the response `{"format":"TEXT","content":"Hello World!"}`
+Which produces the response `{"format":"TEXT","content":"Hello World!"}`
 
 # Why Bun?
 
 Because it's awesome. It's super-fast, fun to work with, and comes with a ton of great tooling out-of-the-box.
 
-Would you like to [know more](https://bun.com)?
+Would you like to know [more](https://bun.com)?

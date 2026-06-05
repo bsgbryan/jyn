@@ -1,6 +1,6 @@
 {
   "name": "@bsgbryan/jyn",
-  "version": "2026.06.02",
+  "version": "2026.06.03",
   "description": "A simple, async, multithreaded web socket & http Mädūl server",
   "homepage": "https://github.com/bsgbryan/jyn#readme",
   "author": "Bryan Maynard <bsgbryan@gmail.com> (https://bsgbryan.com)",
@@ -15,8 +15,14 @@
   ],
   "keywords": [
     "api",
+    "async",
+    "http",
+    "https",
+    "multithreaded",
+    "server",
     "web socket",
-    "server"
+    "ws",
+    "wss"
   ],
   "repository": {
     "type": "git",
@@ -26,10 +32,6 @@
     "url": "https://github.com/bsgbryan/jyn/issues"
   },
   "type": "module",
-  "directories": {
-    "lib": "lib",
-    "test": "test"
-  },
   "license": "MIT",
   "dependencies": {
     "@bsgbryan/madul": "^2026.5.31",

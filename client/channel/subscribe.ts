@@ -1,5 +1,7 @@
 type Params = {
-  message: string
+  message: {
+    channel: string
+  }
   session_id: string
 }
 
@@ -7,10 +9,9 @@ export default ({
   message,
   session_id,
 }: Params) => {
-  const json = JSON.parse(message)
   postMessage({
     action: 'SUBSCRIBE',
-		channel: json.channel,
+		channel: message.channel,
 		session_id,
 	})
 }

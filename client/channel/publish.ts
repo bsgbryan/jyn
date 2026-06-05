@@ -1,5 +1,8 @@
 type Params = {
-  message: string
+  message: {
+    channel: string
+    content: string
+  }
   session_id: string
 }
 
@@ -7,11 +10,10 @@ export default ({
   message,
   session_id,
 }: Params) => {
-  const json = JSON.parse(message)
   postMessage({
     action: 'PUBLISH',
-    channel: json.channel,
-		content: json.content,
+    channel: message.channel,
+		content: message.content,
 		session_id,
 	})
 }
