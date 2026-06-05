@@ -1,4 +1,7 @@
-import type { BufferSource } from "bun"
+import type {
+  BufferSource,
+  TLSOptions,
+} from "bun"
 import type {
   Result,
   Session,
@@ -71,15 +74,24 @@ const send = (
   json:   (content: string      ) => ws.sendText(JSON.stringify({ format: 'JSON',  content })),
   text:   (content: string      ) => ws.sendText(JSON.stringify({ format: 'TEXT',  content })),
 
-  subscribe: (channel: string) => ws.subscribe(channel),
-  publish: (channel: string, content: string) => server.publish(channel, content),
+  subscribe: (channel: string                 ) => ws.subscribe(channel),
+  publish:   (channel: string, content: string) => server.publish(channel, content),
 })
 
 const main = async () => {
   const args = await params()
   const casian = await madul('+RogueOne', args, ROOT)
 
+  const tls: TLSOptions = {}
+
+  if (args.tlsCa)   tls.ca   = Bun.file(args.tlsCa)
+  if (args.tlsCert) tls.cert = Bun.file(args.tlsCert)
+  if (args.tlsKey)  tls.key  = Bun.file(args.tlsKey)
+
+  if (args.tlsKeyPassphrase) tls.passphrase = args.tlsKeyPassphrase
+  
   const server = Bun.serve({
+    tls,
     hostname: args.host,
     port: args.port,
     async fetch(req, server) {
