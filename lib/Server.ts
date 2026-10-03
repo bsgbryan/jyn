@@ -65,14 +65,21 @@ const get = async (path: string, params: URLSearchParams, headers: Headers) => {
   return sad
 }
 
+type Message = {
+  content:    string
+  format:    'BINARY' | 'ERROR' | 'JSON' | 'TEXT'
+  madul:      string
+  session_id: string
+}
+
 const send = (
   server: Bun.Server<Session>,
   ws: Bun.ServerWebSocket<Session>,
 ) => ({
-  binary: (content: BufferSource) => ws.sendBinary(content),
-  error:  (content: string      ) => ws.sendText(JSON.stringify({ format: 'ERROR', content })),
-  json:   (content: string      ) => ws.sendText(JSON.stringify({ format: 'JSON',  content })),
-  text:   (content: string      ) => ws.sendText(JSON.stringify({ format: 'TEXT',  content })),
+  binary: (msg: BufferSource) => ws.sendBinary(msg),
+  error:  (msg: Message     ) => ws.sendText(JSON.stringify(msg)),
+  json:   (msg: Message     ) => ws.sendText(JSON.stringify(msg)),
+  text:   (msg: Message     ) => ws.sendText(JSON.stringify(msg)),
 
   subscribe: (channel: string                 ) => ws.subscribe(channel),
   publish:   (channel: string, content: string) => server.publish(channel, content),
